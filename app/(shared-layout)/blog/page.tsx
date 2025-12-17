@@ -1,11 +1,28 @@
 import { buttonVariants } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+} from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/convex/_generated/api";
 import { fetchQuery } from "convex/nextjs";
+import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
+
+export const dynamic = "force-static";
+// 'auto' | 'force-dynamic' | 'error' | 'force-static'
+
+export const revalidate = 30;
+export const metadata: Metadata = {
+  title: "Blog | Blogi project demo",
+  description: "Read our latest articles and insights",
+  category: "blog and news",
+  authors: [{ name: "Nikzad Behnam" }],
+};
 
 const BlogPage = async () => {
   return (
@@ -26,7 +43,6 @@ const BlogPage = async () => {
 };
 
 async function LoadBlogList() {
-  await new Promise((resolve) => setTimeout(resolve, 5000));
   const data = await fetchQuery(api.posts.getPosts);
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

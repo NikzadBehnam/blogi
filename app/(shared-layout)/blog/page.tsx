@@ -11,12 +11,13 @@ import { fetchQuery } from "convex/nextjs";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { connection } from "next/server";
 import { Suspense } from "react";
 
-export const dynamic = "force-static";
+// export const dynamic = "force-static";
 // 'auto' | 'force-dynamic' | 'error' | 'force-static'
+// export const revalidate = 30;
 
-export const revalidate = 30;
 export const metadata: Metadata = {
   title: "Blog | Blogi project demo",
   description: "Read our latest articles and insights",
@@ -43,6 +44,7 @@ const BlogPage = async () => {
 };
 
 async function LoadBlogList() {
+  "use cache";
   const data = await fetchQuery(api.posts.getPosts);
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
